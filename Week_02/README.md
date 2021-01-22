@@ -116,6 +116,27 @@
 	
 ###### 启发式参数
 1.自适应模式(adaptive):
+- 触发"学习"集合的初始阈值: -XX:ShenandoahInitFreeThreshold=#
+- 启发式无条件触发GC的可用空间阈值: -XX:ShenandoahMinFreeThreshold=#
+- 保留堆内存应对内存分配峰值: -XX:ShenandoahAllocSpikeFactor=#
+- 设置在将区域标记收集之前需要包含的垃圾百分比: -XX:ShenandoahGarbageThreshold=#
+
+2.静态模式(static):根据堆内存使用率和内存分配压力决定是否启动GC周期
+- 设置空闲堆百分比阈值: -XX:ShenandoahFreeThreshold=#
+- 设置内存分配量百分百阈值: -XX:ShenandoahAllocationThreshold=#
+- 设置小堆块标记为可回收百分百阈值: -XX:ShenandoahGarbageThreshold=#
+- 设置GC启动周期时的可用堆百分比阈值: -XX:ShenandoahAllocationThreshold=#
+- 设置从上个GC周期到新的GC周期开始之前的内存分配百分比阈值: -XX:ShenandoahAllocationThreshold=#
+- 设置在将区域标记为收集之前需要包含的垃圾百分比阈值: -XX:ShenandoahGarbageThreshold=#
+
+3.紧凑模式(compact): 只要有内存分配，就会连续运行GC回收，并在上一个周期结束后立即开始下一个周期，有吞吐量开销但能提供迅速的内存回收
+- 设置并发GC线程数： -XX:ConcGCThreads=#
+- 设置从上个GC周期到新的GC周期开始之前的内存分配百分比: -XX:ShenandoahAllocationThreshold=#
+
+4.被动模式(passive): 内存用完发送stw，用于系统诊断和功能测试
+
+5.积极模式(aggressive): 在上一个GC周期完成时启动新的GC周期，并将所有存活对象归集到一起，这将严重影响性能，但可以用来测试GC自身
+
 ##### 特点:
 - GC线程和应用线程并行执行堆压缩、标记和整理消除大部分暂停时间。
 - 保证无论堆大小都有很低的暂停时间
