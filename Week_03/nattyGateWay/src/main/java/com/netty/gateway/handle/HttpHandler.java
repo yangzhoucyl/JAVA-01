@@ -1,5 +1,8 @@
 package com.netty.gateway.handle;
 
+import com.netty.gateway.filter.HttpRequestFilter;
+import com.netty.gateway.filter.HttpResponseFilter;
+import com.netty.gateway.filter.RequestHeaderFilter;
 import com.netty.gateway.handle.strategy.HandlerStrategyFactory;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
@@ -28,6 +31,12 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
     @Autowired
     private HandlerStrategyFactory handlerStrategyFactory;
 
+    @Autowired
+    private HttpRequestFilter requestFilter;
+
+    @Autowired
+    private HttpResponseFilter responseFilter;
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         FullHttpRequest httpRequest = (FullHttpRequest) msg;
@@ -47,6 +56,7 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
     }
 
     private void handleResponse(FullHttpRequest fullRequest, ChannelHandlerContext ctx) {
+//        requestFilter.filter(fullRequest);
         FullHttpResponse fullHttpResponse = null;
         // okhttp
         Object response = handlerStrategyFactory.getHandler(fullRequest).handler(fullRequest);
@@ -61,6 +71,7 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
                     fullHttpResponse.headers().set("Content-Type", "application/json");
                     fullHttpResponse.headers().setInt("Content-Length", fullHttpResponse.content().readableBytes());
             }
+//            responseFilter.filter(fullHttpResponse);
         } finally {
             if (fullRequest != null) {
                 if (!HttpUtil.isKeepAlive(fullRequest)) {

@@ -28,6 +28,7 @@ public class RouteHandler implements BaseHandler{
         HttpEndpointRouter httpEndpointRouter = new RandomHttpEndpointRouter();
         RouteServerInfo route = httpEndpointRouter.route(serverInfos);
         String routeUri = uri.replace("/" + applicationName, "");
-        return Okhttp.httpRequest(route.getAddress() + ":" +route.getPort() + routeUri, request.content().toString(CharsetUtil.UTF_8), request.method().name());
+        return Okhttp.httpRequest(route.getAddress() + ":" +route.getPort() + routeUri,
+                request.content().toString(CharsetUtil.UTF_8), request.method().name());
     }
 }
