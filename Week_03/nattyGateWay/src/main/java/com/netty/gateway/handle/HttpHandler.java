@@ -56,7 +56,7 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
     }
 
     private void handleResponse(FullHttpRequest fullRequest, ChannelHandlerContext ctx) {
-//        requestFilter.filter(fullRequest);
+        requestFilter.filter(fullRequest);
         FullHttpResponse fullHttpResponse = null;
         // okhttp
         Object response = handlerStrategyFactory.getHandler(fullRequest).handler(fullRequest);
@@ -71,7 +71,7 @@ public class HttpHandler extends ChannelInboundHandlerAdapter {
                     fullHttpResponse.headers().set("Content-Type", "application/json");
                     fullHttpResponse.headers().setInt("Content-Length", fullHttpResponse.content().readableBytes());
             }
-//            responseFilter.filter(fullHttpResponse);
+            responseFilter.filter(fullHttpResponse);
         } finally {
             if (fullRequest != null) {
                 if (!HttpUtil.isKeepAlive(fullRequest)) {
