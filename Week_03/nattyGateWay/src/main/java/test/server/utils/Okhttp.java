@@ -1,0 +1,38 @@
+package test.server.utils;
+
+import okhttp3.*;
+
+import java.io.IOException;
+
+/**
+ * @author YangZhou
+ */
+public class Okhttp {
+
+    public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+    public static final String HTTP_METHOD_POST = "POST";
+
+    public static final String HTTP_METHOD_GET = "GET";
+
+    public static String httpRequest(String url, String json, String method){
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = null;
+        if (HTTP_METHOD_POST.equalsIgnoreCase(method)){
+            request = new Request.Builder().url(url).post(body).build();
+        }else if (HTTP_METHOD_GET.equalsIgnoreCase(method)){
+            request = new Request.Builder().url(url).get().build();
+        }
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                System.out.println("请求失败");
+            }
+            return response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("请求失败,服务未响应");
+        }
+        return null;
+    }
+}
