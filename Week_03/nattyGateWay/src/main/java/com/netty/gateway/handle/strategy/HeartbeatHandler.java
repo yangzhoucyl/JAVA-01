@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.netty.gateway.handle.HeartBeatConnect;
 import com.netty.gateway.route.RouteMappingSingleton;
 import io.netty.handler.codec.http.FullHttpRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,7 @@ import java.nio.charset.StandardCharsets;
  */
 @Service(value = "heartBeat")
 public class HeartbeatHandler implements BaseHandler{
+
     @Override
     public Object handler(FullHttpRequest request) {
         String json = request.content().toString(StandardCharsets.UTF_8);
