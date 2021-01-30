@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
  */
 @Service(value = "heartBeat")
 public class HeartbeatHandler implements BaseHandler{
+
     @Override
     public Object handler(FullHttpRequest request) {
         String json = request.content().toString(StandardCharsets.UTF_8);

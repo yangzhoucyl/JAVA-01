@@ -28,7 +28,11 @@ public class Okhttp {
             if (!response.isSuccessful()) {
                 System.out.println("请求失败");
             }
-            return response.body().string();
+//            Response.Builder builder = response.newBuilder();
+//            Response clone = builder.build();
+//            response.newBuilder().body(clone.body()).build();
+            String result = response.body().string();
+            return result;
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("请求失败,服务未响应");
