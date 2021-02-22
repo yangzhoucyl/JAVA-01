@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="student1" class="com.homework.assembling.xml.bean.Student">
+        <property name="age" value="11"/>
+        <property name="id" value="1000021"/>
+        <property name="name" value="杨过"/>
+        <property name="sex" value="男"/>
+    </bean>
+
+    <bean id="studentAop1" class="com.homework.aop.StudentAop"/>
+    <bean id="aopBean1" class="com.homework.aop.AopBean"/>
+
+    <aop:aspectj-autoproxy />
+
+    <aop:config>
+        <aop:pointcut id="print" expression="execution(* com.homework.aop.BaseMethod.print())"/>
+        <aop:aspect ref="studentAop1">
+            <aop:after method="after" pointcut-ref="print"/>
+            <aop:before method="before" pointcut-ref="print"/>
+            <aop:around method="around" pointcut-ref="print"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
