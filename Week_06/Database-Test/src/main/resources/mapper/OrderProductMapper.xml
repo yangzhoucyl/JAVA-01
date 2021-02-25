@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.database.dao.OrderProductMapper">
+  <resultMap id="BaseResultMap" type="com.example.database.model.OrderProduct">
+    <!--@mbg.generated-->
+    <!--@Table order_product-->
+    <id column="order_product_id" jdbcType="INTEGER" property="orderProductId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="product_num" jdbcType="INTEGER" property="productNum" />
+    <result column="discount" jdbcType="DOUBLE" property="discount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    order_product_id, product_id, order_id, product_num, discount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from order_product
+    where order_product_id = #{orderProductId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from order_product
+    where order_product_id = #{orderProductId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="order_product_id" keyProperty="orderProductId" parameterType="com.example.database.model.OrderProduct" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into order_product (product_id, order_id, product_num, 
+      discount)
+    values (#{productId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{productNum,jdbcType=INTEGER}, 
+      #{discount,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" keyColumn="order_product_id" keyProperty="orderProductId" parameterType="com.example.database.model.OrderProduct" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into order_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="productNum != null">
+        product_num,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="productNum != null">
+        #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.database.model.OrderProduct">
+    <!--@mbg.generated-->
+    update order_product
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="productNum != null">
+        product_num = #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where order_product_id = #{orderProductId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.database.model.OrderProduct">
+    <!--@mbg.generated-->
+    update order_product
+    set product_id = #{productId,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
+      product_num = #{productNum,jdbcType=INTEGER},
+      discount = #{discount,jdbcType=DOUBLE}
+    where order_product_id = #{orderProductId,jdbcType=INTEGER}
+  </update>
+  <insert id="batchInsert" keyColumn="order_product_id" keyProperty="orderProductId" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into order_product
+    (product_id, order_id, product_num, discount)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.productId,jdbcType=INTEGER}, #{item.orderId,jdbcType=INTEGER}, #{item.productNum,jdbcType=INTEGER}, 
+        #{item.discount,jdbcType=DOUBLE})
+    </foreach>
+  </insert>
+</mapper>
